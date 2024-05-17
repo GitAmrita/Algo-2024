@@ -1,8 +1,5 @@
+import math
 from typing import List
-
-
-# def start_up():
-#     print ('hello world')
 
 def maxProfitAssignment(difficulty: List[int], profit: List[int], worker: List[int]) -> int:
     dp_map = map_difficulty_with_profit(zip(difficulty, profit))
@@ -139,6 +136,59 @@ def swap(matrix, i):
 def transpose(matrix):
     transposed = list(map(list, zip(*matrix)))
     return transposed
+
+# https://leetcode.com/problems/koko-eating-bananas/solutions/769702/python-clear-explanation-powerful-ultimate-binary-search-template-solved-many-problems/?envType=problem-list-v2&envId=5h1lvmem
+def minEatingSpeed(piles: List[int], h: int) -> int:
+    def bananas_finished() -> bool:
+        total_time = sum(math.ceil(p/mid) for p in piles)
+        return total_time <= h
+
+    left = 1
+    right = max(piles)
+    while left < right:
+        mid = left + (right - left)//2
+        if bananas_finished():
+            right = mid 
+        else:
+            left = mid + 1
+    return right
+
+'''
+Nearly every one have used the Multiplication Table.
+But could you find out the k-th smallest number quickly from the multiplication table? 
+Given the height m and the length n of a m * n Multiplication Table,
+and a positive integer k, you need to return the k-th smallest number in this table.
+Example :
+Input: m = 3, n = 3, k = 5
+Output: 3
+Explanation: 
+The Multiplication Table:
+1	2	3
+2	4	6
+3	6	9
+The 5-th smallest number is 3 (1, 2, 2, 3, 3).
+'''
+
+def kthSmallestNumInMultiplicationTable(row, col, k):
+    def enough(num) -> bool:
+        count = 0
+        for val in range(1, row + 1):
+            add = min(num // val, col)
+            if add == 0: 
+                break
+            count += add
+        return count >= k 
+    
+    left = 1
+    right = row * col
+    while left < right:
+        mid = left + (right - left) // 2
+        if enough(mid):
+            right = mid 
+        else:
+            left = mid + 1
+    return left
+
 
 
 
