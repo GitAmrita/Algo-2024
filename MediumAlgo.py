@@ -208,10 +208,48 @@ def find_nth_digit(n):
     digit_index = (n - 1) % digit_length
     return int(str(number)[digit_index])
 
+def validWordAbbreviation(self, word: str, abbr: str) -> bool:
+    # word = "internationalization"
+    # abbr = "i12iz4n" -> true
+    if len(abbr) > len(word):
+        return False
+    
+    w_ptr = 0
+    a_ptr = 0
+    word = list(word)
+    abbr = list(abbr)
+
+    while a_ptr < len(abbr) and w_ptr < len(word):
+        if not abbr[a_ptr].isdigit():
+            if word[w_ptr] != abbr[a_ptr]:
+                return False
+            else:
+                w_ptr += 1
+                a_ptr += 1
+        else:
+            if self.has_leading_zero(abbr[a_ptr]):
+                return False
+            num = self.get_number(abbr[a_ptr:])
+            a_ptr += len(num) 
+            w_ptr += int(num) 
+    return a_ptr == len(abbr) and w_ptr == len(word)
+
+def get_number(self, word):
+    nums = []
+    for w in word:
+        if w.isdigit():
+            nums.append(w)
+        else:
+            break
+    return ''.join(nums)
+
+def has_leading_zero(self, c):
+    return int(c) == 0
 
 
 
 
-       
 
-        
+    
+
+    
