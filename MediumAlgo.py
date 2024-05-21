@@ -189,6 +189,25 @@ def kthSmallestNumInMultiplicationTable(row, col, k):
             left = mid + 1
     return left
 
+def find_nth_digit(n):
+    # Step 1: Determine the range where the nth digit falls
+    digit_length = 1
+    count = 9
+    
+    # Step 2: Identify the range of numbers that contains the nth digit
+    while n > digit_length * count:
+        n -= digit_length * count
+        digit_length += 1
+        count *= 10
+    
+    # Step 3: Find the actual number that contains the nth digit
+    start = 10**(digit_length - 1)
+    number = start + (n - 1) // digit_length
+    
+    # Step 4: Identify the digit within the number
+    digit_index = (n - 1) % digit_length
+    return int(str(number)[digit_index])
+
 
 
 
