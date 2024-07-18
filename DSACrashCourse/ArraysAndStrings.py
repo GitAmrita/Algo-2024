@@ -253,6 +253,94 @@ class ArraysAndStrings:
         reversed_s = sub[::-1].strip()
         result = " " * space + reversed_s 
         return result
+    
+    def reverse_only_letters(self, s: str) -> str:
+        '''
+        Given a string s, reverse the string according to the following rules: All the characters that are not English letters
+        remain in the same position. All the English letters (lowercase or uppercase) should be reversed.
+        Input: s = "a-bC-dEf-ghIj"
+        reversed_s = jIhgfEdCba
+        Output: "j-Ih-gfE-dCba"
+        '''
+        non_english_char_pos_dict = {}
+        english_chars = []
+        ans = []
+        for i in range(len(s)):
+            ascii_val = ord(s[i])
+            if not self.is_english_alphabet(ascii_val=ascii_val):
+               non_english_char_pos_dict[i] = s[i]
+            else:
+                english_chars.append(s[i])
+        reversed_str = english_chars[::-1]
+        english_i = 0
+        for i in range(len(s)):
+            non_english_char = non_english_char_pos_dict.get(i, None)
+            if non_english_char:
+                ans.append(non_english_char)
+            else:
+                english_char = reversed_str[english_i]
+                ans.append(english_char)
+                english_i += 1
+        output = ''.join(ans)
+        print(output)
+        return output
+
+    def is_english_alphabet(self, ascii_val) -> bool:
+        return 65 <= ascii_val <= 90 or 97 <= ascii_val <= 122
+    
+
+    def get_min_common(self, nums1, nums2) -> int:
+        '''
+        Given two integer arrays nums1 and nums2, sorted in non-decreasing order, return the minimum integer common to both arrays.
+        If there is no common integer amongst nums1 and nums2, return -1.
+        Input: nums = [0,1,0,3,12]
+        Output: [1,3,12,0,0]  
+        '''
+        i1 = i2 = 0
+        while i1 < len(nums1) and i2 < len(nums2):
+            if nums1[i1] == nums2[i2]:
+                print(nums1[i1])
+                return nums1[i1]
+            elif nums1[i1] < nums2[i2]:
+                i1 += 1
+            else:
+                i2 += 1
+        print("-1")
+        return -1
+    
+    def move_zeros(self, nums):
+        '''
+        Input: nums = [0,1,0,3,12] 
+        Output: [1,3,12,0,0]
+        '''
+        zero = non_zero = 0
+        while zero < len(nums) and non_zero < len(nums):
+            if nums[non_zero] != 0:
+                nums[zero], nums[non_zero] = nums[non_zero], nums[zero]
+                non_zero += 1
+                zero += 1
+            else:
+                non_zero += 1
+        return nums
+    
+    def reverse_prefix_of_word(self, s, ch) -> str:
+        '''
+        Given a 0-indexed string word and a character ch, reverse the segment of word that starts at index 0 and ends at the index
+        of the first occurrence of ch (inclusive). If the character ch does not exist in word, do nothing.
+
+       if word = "abcdefd" and ch = "d", The resulting string will be "dcbaefd".
+        '''
+        first_idx = s.find(ch)
+        if first_idx == -1:
+            return s
+        sub = s[0 : first_idx + 1]
+        same = s[first_idx + 1 : len(s)]
+        reversed_str = sub[::-1]
+        output = reversed_str + same
+        print(output)
+        return output
+ 
+
 
         
 
