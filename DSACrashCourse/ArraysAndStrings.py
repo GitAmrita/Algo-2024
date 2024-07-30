@@ -1,4 +1,5 @@
 from typing import List
+import math
 
 
 class ArraysAndStrings:
@@ -339,6 +340,89 @@ class ArraysAndStrings:
         output = reversed_str + same
         print(output)
         return output
+    
+    def minimum_length_subarray(self, target: int, nums: List[int]) -> int:
+        '''
+        Given an array of positive integers nums and a positive integer target, return the minimal length of a subarray whose
+        sum is greater than or equal to target. If there is no such subarray, return 0 instead.
+        Input: target = 7, nums = [2,3,1,2,4,3]
+        Output: 2
+        Explanation: The subarray [4,3] has the minimal length under the problem constraint.
+        '''
+        start = 0
+        res = math.inf
+        curr = 0
+        n = len(nums)
+        for i in range(n):
+            curr += nums[i]
+            while curr >= target and start < n:
+                res = min(res, i - start + 1)
+                curr -= nums[start]
+                start += 1
+        if res == math.inf:
+            return 0
+        else:
+            return res
+        
+    def max_vowels(self, s: str, k: int) -> int:
+        '''
+        Given a string s and an integer k, return the maximum number of vowel letters in any substring of s with length k.
+        Input: s = "a b c i i i d e f", k = 3
+        Output: 3
+        Explanation: The substring "iii" contains 3 vowel letters.
+        '''
+        vowels = ['a', 'e', 'i', 'o', 'u']
+        def vowel_count(word) -> int:
+            tot = 0
+            for w in word:
+                if w in vowels:
+                    tot += 1
+            return tot
+
+        start = 0
+        curr = k - 1
+        sub = s[start: curr + 1]
+        ans = vowel_count(sub)
+        temp = ans
+        while curr < len(s) - 1:
+            curr += 1
+            if s[curr] in vowels:
+                temp += 1 
+            if s[start] in vowels:
+                temp -= 1
+            start += 1
+            ans = max(ans, temp)
+        return ans
+    
+    def equal_substring(self, s: str, t: str, max_cost: int) -> int:
+        '''
+        You are given two strings s and t of the same length and an integer maxCost. You want to change s to t.
+        Changing the ith character of s to ith character of t costs |s[i] - t[i]| (i.e., the absolute difference between the
+        ASCII values of the characters). Return the maximum length of a substring of s that can be changed to be the same as 
+        the corresponding substring of t with a cost less than or equal to maxCost. If there is no substring from s that can 
+        be changed to its corresponding substring from t, return 0.
+        Input: s = "abcd", t = "bcdf", maxCost = 3 Output: 3 Explanation: "abc" of s can change to "bcd".
+
+        '''
+        def get_cost(s, t):
+            return abs(ord(s) - ord(t))
+        # a b c d e        b b c f g
+        remain_cost = max_cost
+        for i in range(len(s)):
+            cost = get_cost(s[i], t[i])
+            remain_cost = remain_cost - cost
+            if remain_cost < 0:
+                i -= 1
+                break
+            if remain_cost == 0:
+                break
+        return i + 1
+            
+
+
+
+
+
  
 
 
