@@ -404,19 +404,61 @@ class ArraysAndStrings:
         Input: s = "abcd", t = "bcdf", maxCost = 3 Output: 3 Explanation: "abc" of s can change to "bcd".
 
         '''
-        def get_cost(s, t):
-            return abs(ord(s) - ord(t))
-        # a b c d e        b b c f g
-        remain_cost = max_cost
-        for i in range(len(s)):
-            cost = get_cost(s[i], t[i])
-            remain_cost = remain_cost - cost
-            if remain_cost < 0:
-                i -= 1
-                break
-            if remain_cost == 0:
-                break
-        return i + 1
+        start = 0
+        currentCost = 0
+        maxLength = 0
+        
+        for end in range(len(s)):
+            currentCost += abs(ord(s[end]) - ord(t[end]))
+            
+            while currentCost > max_cost:
+                currentCost -= abs(ord(s[start]) - ord(t[start]))
+                start += 1
+            
+            maxLength = max(maxLength, end - start + 1)
+        
+        return maxLength
+    
+    def largest_altitude(self, gain: List[int]) -> int:
+        '''
+        There is a biker going on a road trip. The road trip consists of n + 1 points at different altitudes.
+        The biker starts his trip on point 0 with altitude equal 0. You are given an integer array gain of length n 
+        where gain[i] is the net gain in altitude between points i​​​​​​ and i + 1 for all (0 <= i < n). Return the highest 
+        altitude of a point.
+        Input: gain = [-5,1,5,0,-7] Output: 1 Explanation: The altitudes are [0,-5,-4,1,1,-6]. The highest is 1.
+        '''
+        highest_alt = 0
+        last = 0
+        for i in range(len(gain)):
+            last = last + gain[i]
+            highest_alt = max(highest_alt, last)
+        print(highest_alt)
+        return highest_alt
+    
+    def pivot_index(self, nums: List[int]) -> int:
+        '''
+        Given an array of integers nums, calculate the pivot index of this array. The pivot index is the index where the sum of 
+        all the numbers strictly to the left of the index is equal to the sum of all the numbers strictly to the index's right. 
+        If the index is on the left edge of the array, then the left sum is 0 because there are no elements to the left.
+        This also applies to the right edge of the array. Return the leftmost pivot index. If no such index exists, return -1.
+
+        Input: nums = [1,7,3,6,5,6] Output:3
+        '''
+        prefix_sum = [0] * len(nums)
+        prefix_sum[0] = nums[0]
+        for i in range(1, len(nums)):
+            prefix_sum[i] = nums[i] + prefix_sum[i-1]
+            # [1, 8, 11, 17, 22, 28]
+        for i in range(len(prefix_sum)):
+            left = 0 if i == 0 else prefix_sum[i - 1]
+            right = 0 if i == len(prefix_sum) - 1 else prefix_sum[-1] - prefix_sum[i]
+            if left == right:
+                print(i)
+                return i
+        print('-1')
+        return -1
+
+        
             
 
 
