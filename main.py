@@ -1,3 +1,4 @@
+from DSACrashCourse.Hashing import Hashing
 from GoogleAlgo import Solution, RangeModule
 from MediumAlgo import  *
 from DSACrashCourse.ArraysAndStrings import *
@@ -42,4 +43,10 @@ chapter_1 = ArraysAndStrings()
 # res = chapter_1.max_vowels('leetcode', 3)
 # res = chapter_1.equal_substring('krrgw', 'zjxss', 19)
 # res = chapter_1.largest_altitude([-5,1,5,0,-7])
-res = chapter_1.pivot_index([2,1,-1])
+# res = chapter_1.pivot_index([2,1,-1])
+
+chapter_2 = Hashing()
+# res = chapter_2.intersection([[3,1,2,4,5],[1,2,3,4],[3,4,5,6]])
+# res = chapter_2.subarray_sum([1, 2, 1, 2, 1], 3)
+# res = chapter_2.nice_subarray([1, 1, 2, 1, 1, 3], 3)
+res = chapter_2.zero_or_one_loss([[1,3],[2,3],[3,6],[5,6],[5,7],[4,5],[4,8],[4,9],[10,4],[10,9]])

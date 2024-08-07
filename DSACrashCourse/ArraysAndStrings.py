@@ -453,12 +453,33 @@ class ArraysAndStrings:
             left = 0 if i == 0 else prefix_sum[i - 1]
             right = 0 if i == len(prefix_sum) - 1 else prefix_sum[-1] - prefix_sum[i]
             if left == right:
-                print(i)
                 return i
-        print('-1')
         return -1
 
+class NumArray:
+    '''
+    Input ["NumArray", "sumRange", "sumRange", "sumRange"]
+    [[[-2, 0, 3, -5, 2, -1]], [0, 2], [2, 5], [0, 5]]  Output [null, 1, -1, -3]
+    '''
+
+    def __init__(self, nums: List[int]):
+        self.prefix_sum = [0] * len(nums)
+        # [-2, -2, 1, -4, -2, -3]
+        self.prefix_sum[0] = nums[0]
+        for i in range(1, len(nums)):
+            self.prefix_sum[i] = nums[i] + self.prefix_sum[i - 1]
         
+
+    def sumRange(self, left: int, right: int) -> int:
+        if left == 0:
+            return self.prefix_sum[right]
+        else:
+            return self.prefix_sum[right] - self.prefix_sum[left - 1]
+
+
+# Your NumArray object will be instantiated and called as such:
+# obj = NumArray(nums)
+# param_1 = obj.sumRange(left,right)        
             
 
 
