@@ -380,6 +380,74 @@ class Hashing:
             else:
                 break
         return count * first_value
+    
+    def findLucky(self, arr: List[int]) -> int:
+        '''
+        Given an array of integers arr, a lucky integer is an integer that has a frequency in the array equal to its value.
+        Return the largest lucky integer in the array. If there is no lucky integer return -1
+        '''
+        res = -1
+        freq = Counter(arr)
+        for key, value in freq.items():
+            if key == value:
+                res = max(res, key)
+        return res
+    
+    def uniqueOccurrences(self, arr: List[int]) -> bool:
+        '''
+        Given an array of integers arr, return true if the number of occurrences of each value in the array is unique or false otherwise.
+        Input: arr = [1,2,2,1,1,3] Output: true
+        Explanation: The value 1 has 3 occurrences, 2 has 2 and 3 has 1. No two values have the same number of occurrences.
+        '''
+
+        freq = Counter(arr)
+        unique = set(freq.values())
+        return len(unique) == len(freq.keys())
+    
+    def frequencySort(self, s: str) -> str:
+        '''
+        Given a string s, sort it in decreasing order based on the frequency of the characters.
+        The frequency of a character is the number of times it appears in the string.
+        Return the sorted string. If there are multiple answers, return any of them.
+        '''
+        freq = Counter(s)
+        ans = ''
+        sorted_freq = dict(sorted(freq.items(), key=lambda item:item[1], reverse=True))
+
+        for key, value in sorted_freq.items():
+            val = key * value
+            ans += val
+        return ans
+    
+    def maxSubarrayLength(self, nums: List[int], k: int) -> int:
+        '''
+        Input: nums = [1,2,3,1,2,3,1,2], k = 2 Output: 6
+        '''
+        freq = defaultdict(int)
+        left = 0
+        res = 0
+        for right in range(len(nums)):
+            freq[nums[right]] += 1
+            while freq[nums[right]]> k:
+                freq[nums[left]] -= 1
+                left += 1
+            res = max(res, right - left + 1)
+        return res
+    
+    def numIdenticalPairs(self, nums: List[int]) -> int:
+        '''
+        [1,2,3,1,1,3]
+        Given an array of integers nums, return the number of good pairs. A pair (i, j) is called good if nums[i] == nums[j] and i < j.
+        '''
+        count = 0
+        index = defaultdict(list)
+        for i in range(len(nums)):
+            index[nums[i]].append(i)
+        for value in index.values():
+            count += len(value) if len(value) > 1 else 0
+        return count
+
+
 
 
 
