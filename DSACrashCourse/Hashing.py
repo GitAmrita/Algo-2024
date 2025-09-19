@@ -439,13 +439,108 @@ class Hashing:
         [1,2,3,1,1,3]
         Given an array of integers nums, return the number of good pairs. A pair (i, j) is called good if nums[i] == nums[j] and i < j.
         '''
+
+        def get_possibilities(n):
+            c = 0
+            length = len(n)
+            for i in range(length):
+                c += length - i - 1
+            return c
+        
         count = 0
         index = defaultdict(list)
         for i in range(len(nums)):
             index[nums[i]].append(i)
         for value in index.values():
-            count += len(value) if len(value) > 1 else 0
+            count += get_possibilities(value)
         return count
+    
+    
+    def numSubarraysWithSumAlt(self, nums, goal):
+        def atMost(goal):
+            if goal < 0:
+                return 0
+            left = 0
+            sum_window = 0
+            count = 0
+            for right in range(len(nums)):
+                sum_window += nums[right]
+                while sum_window > goal:
+                    sum_window -= nums[left]
+                    left += 1
+                count += right - left + 1
+            return count
+        return atMost(goal) - atMost(goal - 1)
+    
+    def numSubarraysWithSum(self, nums, goal):
+        # Dictionary to store the frequency of prefix sums
+        prefix_sum_count = {0: 1}
+        prefix_sum = 0
+        count = 0
+
+        for num in nums:
+            # Update the running prefix sum
+            prefix_sum += num
+        
+            # Check if there is a subarray ending at the current index with sum equal to the goal
+            required = prefix_sum - goal
+            if required in prefix_sum_count:
+                count += prefix_sum_count[required]
+        
+            # Update the prefix_sum_count dictionary
+            if prefix_sum in prefix_sum_count:
+                prefix_sum_count[prefix_sum] += 1
+            else:
+                prefix_sum_count[prefix_sum] = 1
+    
+        return count
+    
+    def maximumUniqueSubarray(self, nums: List[int]) -> int:
+        '''
+        You are given an array of positive integers nums and want to erase a subarray containing unique elements.
+        The score you get by erasing the subarray is equal to the sum of its elements.
+        Return the maximum score you can get by erasing exactly one subarray.
+        Input: nums = [4,2,4,5,6] Output: 17
+        '''
+        left = 0
+        seen = set()
+        max_score = 0
+        current_sum = 0
+        for right in range(len(nums)):    
+            while nums[right] in seen:
+                seen.remove(nums[left])
+                current_sum -=  nums[left]
+                left += 1
+            current_sum += nums[right]
+            max_score = max(max_score, current_sum)
+            seen.add(nums[right])
+        print(max_score)
+        return max_score
+    
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        '''
+        Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
+        Input: s1 = "ab", s2 = "eidboaoo" True
+        '''
+        freq = Counter(s1)
+        prev = ''
+        for c in s2:
+            if c == prev:
+                freq[c] = 1
+            present = freq.get(c, 0)
+            if present == 0:
+                continue
+            if freq[c] - 1 == 0:
+                freq.pop(c)
+                prev = c
+            if not freq:
+                return True
+        return False
+
+
+
+   
+
 
 
 
