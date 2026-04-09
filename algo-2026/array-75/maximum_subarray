@@ -11,3 +11,14 @@
 # Input: nums = [5,4,-1,7,8]
 # Output: 23
 # Explanation: The subarray [5,4,-1,7,8] has the largest sum 23.
+
+def maximumSubarray(nums):
+    max_sum = float('-inf')
+    current_sum = 0
+    for n in nums:
+        current_sum += n
+        max_sum = max(max_sum, current_sum)
+        if current_sum < 0:
+            current_sum = 0
+    return max_sum
+
