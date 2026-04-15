@@ -1,5 +1,5 @@
 # Add 2 numbers a=6 b=3 without using + and - operators
-def getSum(self, a: int, b: int) -> int:
+def getSum(a: int, b: int) -> int:
     mask = 0xFFFFFFFF
     max_positive_32_bit_int = 0x7FFFFFFF
     while b != 0:
