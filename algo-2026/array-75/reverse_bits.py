@@ -3,7 +3,7 @@
 # Input: n = 43261596
 # Output: 964176192
 
-def reverseBits(self, n: int) -> int:
+def reverseBits(n: int) -> int:
     result = 0
     for i in range(32):
         result <<= 1
