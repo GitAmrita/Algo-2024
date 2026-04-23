@@ -28,7 +28,6 @@ def canFinish(numCourses: int, prerequisites: List[List[int]]) -> bool:
 
 
 if __name__ == "__main__":
-    canFinish(4, [[1, 0], [2, 1], [3, 2]])   # no cycle
-    print() [[1,0]]
-    canFinish(2, [[1, 0]])    # cycle
-    print()        
+    # print(canFinish(4, [[1, 0], [2, 1], [3, 2]]))
+    # print(canFinish(2, [[1, 0], [0, 1]]))    # cycle
+    print(canFinish(2, [[1, 0]]))        
