@@ -9,7 +9,7 @@
 from typing import List
 
 
-def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+def insert(intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
     result = []
     added = False
     for s, e in intervals:
